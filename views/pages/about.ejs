@@ -2,38 +2,41 @@
 <html lang="ptbr">
 
 <head>
-    <%- include('../partials/head'); %>
+  <%- include('../partials/head'); %>
 </head>
 
 <body class="container">
 
-    <header>
-        <%- include('../partials/header'); %>
-        <% if(req.session.loggedin) { %>
-        <%- include('../partials/menu_dashboard'); %>
-        <% } %>        
-    </header>
+    <%- include('../partials/posts'); %>
 
-    <main>
-        <div class="row">
-            <div class="col-sm-8">
-                <div class="jumbotron">
-                    <h1>Site de exemplo com Nodejs + MySQL + Express + EJS e Bootstrap</h1>
-                    <p>Fique a vontade para modificá-lo</p>
-                </div>
-            </div>
-
-            <div class="col-sm-4">
-                <div class="well">
-                    <h3>Sidebar de exemplo</h3>
-                    <%- include('../partials/flex-images-wrap'); %>
-                </div>
-            </div>
+  <header>
+    <%- include('../partials/header'); %>
+    <% if(req.session.loggedin) { %>
+    <%- include('../partials/menu_dashboard'); %>
+    <% } %>
+  </header>
+  <div>
+    
+  </div>
+  <main>
+    <div class="row">
+      <div class="col-sm-8">
+        <div class="jumbotron">
+          <h1>Site de exemplo com Nodejs + MySQL + Express + EJS e Bootstrap</h1>
+          <p>Fique a vontade para modificá-lo</p>
         </div>
-    </main>
+      </div>
 
-    <footer>
-        <%- include('../partials/footer'); %>
-    </footer>
+      <div class="col-sm-4">
+        <div class="well">
+          <h3>Sidebar de exemplo</h3>
+          <%- include('../partials/flex-images-wrap'); %>
+        </div>
+      </div>
+    </div>
+  </main>
 
+  <footer>
+    <%- include('../partials/footer'); %>
+  </footer>
 </body>

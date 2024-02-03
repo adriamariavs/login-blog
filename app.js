@@ -8,7 +8,7 @@ const app = express();
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'phpmyadmin',
-    password: '123456789',
+    password: 'adria2403',
     database: 'mydb',
 });
 
@@ -60,9 +60,27 @@ app.get('/login', (req, res) => {
 });
 
 
+// app.get('/about', (req, res) => {
+//     const dados = [
+//         { titulo: "Post 1", conteudo: "Conteudo post 1" },
+//         { titulo: "Post 2", conteudo: "Conteudo post 2" },
+//         { titulo: "Post 3", conteudo: "Conteudo post 3" }
+//     ];
+
+//     res.render('pages/about', { req: req, posts: dados });
+// });
+
 app.get('/about', (req, res) => {
-    res.render('pages/about', { req: req })
+    const dados = [
+        { titulo: "Post 1", conteudo: "Conteudo post 1" },
+        { titulo: "Post 2", conteudo: "Conteudo post 2" },
+        { titulo: "Post 3", conteudo: "Conteudo post 3" }
+    ];
+    console.log(JSON.stringify(dados));
+    res.render('pages/about', { req: req, posts: dados });
 });
+
+
 
 // Rota para processar o formulário de login
 app.post('/login', (req, res) => {
@@ -87,14 +105,17 @@ app.post('/login', (req, res) => {
 // Rota para processar o formulário de caastro depostagem
 app.post('/cadastrar_posts', (req, res) => {
     const { titulo, conteudo } = req.body;
+    const Autor = "admin";
+    const DatadePostagem = new Date();
 
     // const query = 'SELECT * FROM users WHERE username = ? AND password = SHA1(?)';
-    const query = 'INSERT INTO posts (titulo, conteudo) VALUES (?,?)';
+    const query = 'INSERT INTO Post (Titulo, Conteudo, Autor, DatadePostagem) VALUES (?, ?, ?, ?)';
 
-    db.query(query, [titulo, conteudo], (err, results) => {
+    db.query(query, [titulo, conteudo, Autor, DatadePostagem], (err, results) => {
         if (err) throw err;
+        console.log(`Rotina cadastrar Post: ${JSON.stringify(results)} `);
 
-        if (results.length > 0) {
+        if (results.affectedRows > 0) {
             console.log('Cadastro de postagem OK')
             res.redirect('/dashboard');
         } else {
@@ -125,7 +146,11 @@ app.post('/cadastrar_posts', (req, res) => {
 // Rota para a página cadastro do post
 app.get('/cadastrar_posts', (req, res) => {
     // Quando for renderizar páginas pelo EJS, passe parametros para ele em forma de JSON
-    res.render('pages/cadastrar_posts', { req: req });
+    if (req.session.loggedin) {
+     res.render('pages/cadastrar_posts', { req: req });
+    } else {
+res.redirect('/login_failed');
+    }
 });
 
 // Rotas para cadastrar

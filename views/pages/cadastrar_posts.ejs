@@ -9,6 +9,10 @@
 
     <header class="container">
         <%- include('../partials/header'); %>
+        <%- include('../partials/header'); %>
+        <% if(req.session.loggedin) { %>
+        <%- include('../partials/menu_dashboard'); %>
+        <% } %>
     </header>
     <main class="container">
         <!-- <div class="jumbotron"></div> -->
